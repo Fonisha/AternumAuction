@@ -1,0 +1,64 @@
+# Administrator menu.
+title: 'lang:menu.admin.title'
+rows: 5
+
+filler:
+  slots: '0-44'
+  material: BLACK_STAINED_GLASS_PANE
+  name: ' '
+
+items:
+  info:
+    slot: 10
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmI4ZDBkZTRlZDNhMjIwMDA3YTVmZDk3ZDI5NjlkMDJkMjEwNzVkYzU1ZDZmNWU0YzIxZDNiZTZlZjRlZjk4In19fQ=='
+    name: 'lang:menu.admin.info.name'
+    lore: 'lang:menu.admin.info.lore'
+
+  reload:
+    slot: 14
+    material: REDSTONE
+    name: 'lang:menu.admin.reload.name'
+    lore: 'lang:menu.admin.reload.lore'
+    actions:
+      - '[RELOAD]'
+      - '[SOUND] success'
+
+  purge-7:
+    slot: 20
+    material: LAVA_BUCKET
+    name: 'lang:menu.admin.purge-7.name'
+    lore: 'lang:menu.admin.purge-7.lore'
+    actions:
+      - '[PURGE] 7'
+      - '[SOUND] click'
+
+  purge-30:
+    slot: 22
+    material: BUCKET
+    name: 'lang:menu.admin.purge-30.name'
+    lore: 'lang:menu.admin.purge-30.lore'
+    actions:
+      - '[PURGE] 30'
+      - '[SOUND] click'
+
+  back:
+    slot: 36
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjIzZmI2NzQyOTcxNmIyMWJjNmU4ZTdkNjY5Y2VkZGY2NWIxM2UwNzkwYTVjZTU1YjJlMDc3YjgyZDE5ZTEyNCJ9fX0='
+    name: 'lang:menu.common.back.name'
+    lore: 'lang:menu.common.back.lore'
+    actions:
+      - '[MENU] main'
+
+  close:
+    slot: 44
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmM1MWE0OWNmMTViOGNlYTQ2NWVlNmYzMWUwYzdmNzA2NGU5YjhiODRkZTJjZjAxZDJjNzRiODk3YTAyZGRlNyJ9fX0='
+    name: 'lang:menu.common.close.name'
+    lore: 'lang:menu.common.close.lore'
+    actions:
+      - '[CLOSE]'
+
+# Internal marker used to upgrade bundled layouts without touching edited files.
+layout-version: 9

@@ -1,0 +1,36 @@
+# Purchase, bid and remove confirmation.
+# The auction item itself is rendered in the "preview" slot.
+title: 'lang:menu.confirm.title'
+rows: 3
+
+filler:
+  slots: '0-26'
+  material: BLACK_STAINED_GLASS_PANE
+  name: ' '
+
+items:
+  preview:
+    slot: 13
+
+  confirm:
+    slot: 11
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWVmMDcwOGZjZTVmZmFhNjYwOGNiZWQzZTc4ZWQ5NTgwM2Q4YTg5Mzc3ZDFkOTM4Y2UwYmRjNjFiNmRjOWY0ZiJ9fX0='
+    name: 'lang:menu.confirm.buy.name'
+    lore: 'lang:menu.confirm.buy.lore'
+    glow: true
+    actions:
+      - '[BUY]'
+
+  cancel:
+    slot: 15
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1NDgzNjJhMjRjMGZhODQ1M2U0ZDkzZTY4YzU5NjlkZGJkZTU3YmY2NjY2YzAzMTljMWVkMWU4NGQ4OTA2NSJ9fX0='
+    name: 'lang:menu.confirm.cancel.name'
+    lore: 'lang:menu.confirm.cancel.lore'
+    actions:
+      - '[MENU] main'
+      - '[SOUND] click'
+
+# Internal marker used to upgrade bundled layouts without touching edited files.
+layout-version: 9

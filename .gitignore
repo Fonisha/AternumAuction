@@ -1,0 +1,12 @@
+target/
+.idea/
+*.iml
+*.class
+*.log
+build.log
+auctions.yml
+data.yml
+data.db
+player-settings.yml
+*.old.yml
+*.broken.yml
