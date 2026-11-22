@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build
+        run: mvn -B clean package
+
+      - name: Upload shaded jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: AternumAuction
+          path: target/AternumAuction-*.jar
+          if-no-files-found: error

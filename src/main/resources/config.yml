@@ -1,0 +1,151 @@
+# AternumAuction 4.x
+# Author: https://github.com/Fonisha
+# Reload with /ah reload
+
+config-version: 1
+
+# Register the plugin at https://bstats.org/ to receive a plugin id.
+# Leave this at 0 until the project has been registered.
+bstats:
+  plugin-id: 35506
+
+settings:
+  # Available: ru, en. Language files live in plugins/AternumAuction/lang/
+  language: ru
+  default-duration-hours: 48
+  max-duration-hours: 168
+  default-sort: newest
+  min-price: 1.0
+  max-price: 1000000000.0
+  bid-step: 1.0
+  tax-percent: 0.0
+  allow-creative: false
+  allow-bin: true
+  allow-bidding: true
+  prevent-own-purchase: true
+  prevent-duplicate-signatures: false
+  confirm-purchase: true
+  history-limit: 500
+  announce:
+    enabled: true
+    min-price: 1000.0
+  limits:
+    # base amount of active lots
+    default: 10
+    # permission tiers: aternumauction.limit.<value>
+    values: [5, 10, 25, 50, 100]
+  blacklist:
+    materials: [BEDROCK, BARRIER, COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, REPEATING_COMMAND_BLOCK, STRUCTURE_BLOCK, STRUCTURE_VOID, JIGSAW, LIGHT, DEBUG_STICK]
+    names: []
+    lore: []
+    worlds: []
+  item:
+    max-lore-lines: 40
+    allow-shulkers: true
+    preview-containers: true
+    allow-custom-model-data: true
+  search:
+    min-length: 2
+    by-name: true
+    by-material: true
+    by-lore: true
+    by-enchant: true
+    by-seller: true
+
+server:
+  # unique name of this server, used for multi-server filtering
+  id: 'server-1'
+  multi-server:
+    enabled: false
+    # how often claims/payouts created by other servers are pulled
+    sync-interval-seconds: 20
+    # show lots listed on other servers too
+    show-all-servers: false
+
+storage:
+  # yaml, sqlite or mysql
+  type: yaml
+  sqlite-file: data.db
+  mysql:
+    host: localhost
+    port: 3306
+    database: aternum_auction
+    username: root
+    password: ''
+    use-ssl: false
+    # required for multi-server
+    table-prefix: 'aternum_'
+
+currencies:
+  # default currency selected for new listings
+  default: vault
+  # remembers the last currency picked by the player
+  remember-selection: true
+  # lets players pick a currency before listing
+  selection-gui: true
+  vault:
+    enabled: true
+    display-name: '&aМонеты'
+    symbol: '$'
+    icon: GOLD_INGOT
+    permission: ''
+    allow-offline: true
+  experience:
+    enabled: false
+    display-name: '&bОпыт'
+    symbol: 'xp'
+    icon: EXPERIENCE_BOTTLE
+    allow-offline: false
+  levels:
+    enabled: false
+    display-name: '&eУровни'
+    symbol: 'lvl'
+    icon: EXPERIENCE_BOTTLE
+    allow-offline: false
+  item:
+    enabled: false
+    display-name: '&fАлмазы'
+    symbol: 'd'
+    icon: DIAMOND
+    material: DIAMOND
+    amount-per-unit: 1
+    allow-offline: false
+  playerpoints:
+    enabled: false
+    display-name: '&dPoints'
+    symbol: 'pp'
+    icon: SUNFLOWER
+    allow-offline: true
+  coinsengine:
+    enabled: false
+    display-name: '&6Coins'
+    symbol: 'c'
+    icon: GOLD_NUGGET
+    # currency id inside CoinsEngine
+    currency-id: coins
+    allow-offline: true
+
+discord:
+  enabled: false
+  webhook-url: ''
+  username: 'AternumAuction'
+  avatar-url: ''
+  color: 3447003
+  # events: listing, purchase, bid, expiration, admin
+  events: [listing, purchase, bid, expiration]
+  server-name: ''
+
+# The interface itself lives in plugins/AternumAuction/guis/*.yml.
+# Every slot, material, head texture, name, lore and action is edited there.
+# Apply changes with /ah reload.
+
+sounds:
+  open: BLOCK_ENDER_CHEST_OPEN
+  click: UI_BUTTON_CLICK
+  success: ENTITY_PLAYER_LEVELUP
+  error: ENTITY_VILLAGER_NO
+  page: ITEM_BOOK_PAGE_TURN
+  sell: ENTITY_VILLAGER_TRADE
+
+# Messages are not stored here on purpose: see lang/ru.yml and lang/en.yml
+# That keeps config.yml small and translations in one place.

@@ -1,0 +1,42 @@
+# Currency selector shown before listing an item.
+title: 'lang:menu.currency.title'
+rows: 5
+page-size: 27
+content-start: 9
+center-content: false
+
+filler:
+  slots: '0-8,37-39,41-43'
+  material: BLACK_STAINED_GLASS_PANE
+  name: ' '
+
+items:
+  previous-page:
+    slot: 36
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGExZDU1YjNmOTg5NDEwYTM0NzUyNjUwZTI0OGM5YjZjMTc4M2E3ZWMyYWEzZmQ3Nzg3YmRjNGQwZTYzN2QzOSJ9fX0='
+    name: 'lang:menu.common.previous-page.name'
+    lore: 'lang:menu.common.previous-page.lore'
+    actions:
+      - '[PAGE] previous'
+
+  back:
+    slot: 40
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmM1MWE0OWNmMTViOGNlYTQ2NWVlNmYzMWUwYzdmNzA2NGU5YjhiODRkZTJjZjAxZDJjNzRiODk3YTAyZGRlNyJ9fX0='
+    name: 'lang:menu.common.back.name'
+    lore: 'lang:menu.common.back.lore'
+    actions:
+      - '[MENU] main'
+
+  next-page:
+    slot: 44
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmE4N2UzZDk2ZTFjZmViOWNjZmIzYmE1M2EyMTdmYWY1MjQ5ZTI4NTUzM2IyNzFhMmZiMjg0YzMwZGJkOTgyOSJ9fX0='
+    name: 'lang:menu.common.next-page.name'
+    lore: 'lang:menu.common.next-page.lore'
+    actions:
+      - '[PAGE] next'
+
+# Internal marker used to upgrade bundled layouts without touching edited files.
+layout-version: 9

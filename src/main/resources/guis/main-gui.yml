@@ -1,0 +1,132 @@
+# Main auction menu.
+#
+# The interface is configured here, by the server owner, and is applied with
+# /ah reload. Players never edit the layout in game.
+#
+# rows                 menu height (1-6)
+# page-size            how many lots fit on one page
+# content-start        first slot used by lots
+# center-content       center short pages inside the first content row
+# filler               optional background for empty slots
+# name/lore            use "lang:path" to read from lang/ru.yml or lang/en.yml
+# texture              base64 skull texture for a custom head button
+#
+# Actions: [MENU] [PAGE] [SORT] [MODE] [CATEGORY] [CLOSE] [BACK] [REFRESH] [SOUND]
+#          [MESSAGE] [CLAIM] [BUY] [BID] [REMOVE] [RELOAD] [PURGE] [CMD] [PLAYER]
+
+title: 'lang:menu.main.title'
+rows: 6
+page-size: 45
+content-start: 0
+center-content: false
+
+items:
+  auction-type:
+    slot: 46
+    material: CHEST
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdhNTMwZjVjNTc0MmJmMTllMTc1YTRkNzhhZDQzNWFjMGY0Mzk2ZDNiNTQ2NGJkNjE4MmFiMzgyYWNhNDE3ZCJ9fX0='
+    name: 'lang:menu.main.auction-type.name'
+    lore:
+      - 'lang:menu.main.auction-type.lore'
+    conditions:
+      - '%menu-type% == MAIN'
+    actions:
+      - '[MODE] cycle'
+
+  category-switch:
+    slot: 47
+    material: COMPASS
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWY0ZGJmNGQ5N2RhYjBjMjA0NTIwODE1YzZmNjUxNzNjOWU5MWZjNGJhNjBjNzcxZWE4NDkxNmI0OTY1ZTNiNCJ9fX0='
+    name: 'lang:menu.main.category-switch.name'
+    lore:
+      - 'lang:menu.main.category-switch.lore'
+    conditions:
+      - '%menu-type% == MAIN'
+    actions:
+      - '[CATEGORY] cycle'
+
+  # Centered placeholder shown while the auction is empty. It disappears as
+  # soon as at least one lot matches the current filter.
+  empty:
+    slot: 22
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTdmOWM2ZmVmMmFkOTZiM2E1NDY1NjQyYmE5NTQ2NzFiZTFjNDU0M2UyZTI1ZTU2YWVmMGE0N2Q1ZjFmIn19fQ=='
+    name: 'lang:menu.main.empty.name'
+    lore: 'lang:menu.main.empty.lore'
+    conditions:
+      - '%empty% == yes'
+    actions:
+      - '[REFRESH]'
+      - '[SOUND] click'
+
+  previous-page:
+    slot: 48
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWI2ZTIxOTFmMTRjZTk5MzJjM2UyNGM1ZjhjODQ3OWM3NDBjZjRkZmFmYTI1ODE1M2VlODA3MzYyYWY0ODEyIn19fQ=='
+    name: 'lang:menu.common.previous-page.name'
+    lore: 'lang:menu.common.previous-page.lore'
+    actions:
+      - '[PAGE] previous'
+    conditions:
+      - '%menu-type% == MAIN'
+
+  sort:
+    slot: 45
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTg3MDMxYzQ3MjZkZGVkZDY1YjZhMTFkMzE0N2U2NzI0ZGVmYmIyOTBkYTI5Y2JiNzlkYTI0OTA1NDZjYmYifX19'
+    name: 'lang:menu.main.sort.name'
+    lore: 'lang:menu.main.sort.lore'
+    actions:
+      - '[SORT] next'
+      - '[SOUND] click'
+    conditions:
+      - '%menu-type% == MAIN'
+
+  refresh:
+    slot: 49
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWZhN2YxOTFjYjk1OTAwMmExZmRmMmMxMDVlMmZhNjFjMjU4NGE4YzM2YmU0MTBmNTMxMDRiOWQyODRmMjBhMiJ9fX0='
+    name: 'lang:menu.main.refresh.name'
+    lore: 'lang:menu.main.refresh.lore'
+    glow: true
+    actions:
+      - '[REFRESH]'
+      - '[SOUND] click'
+    conditions:
+      - '%menu-type% == MAIN'
+
+  my-items:
+    slot: 52
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI4MGQ5ZTVhNGE0Yzk4YWYwYWU5NGNmMTA5ODA4YTkxZDBhODBiNWNkM2ZiYmZmZGY2NGFkNTkyNDIxMGVkNyJ9fX0='
+    name: 'lang:menu.main.my-items.name'
+    lore: 'lang:menu.main.my-items.lore'
+    actions:
+      - '[MENU] my'
+    conditions:
+      - '%menu-type% == MAIN'
+
+  expired:
+    slot: 53
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTM2ZTk0ZjZjMzRhMzU0NjVmY2U0YTkwZjJlMjU5NzYzODllYjk3MDlhMTIyNzM1NzRmZjcwZmQ0ZGFhNjg1MiJ9fX0='
+    name: 'lang:menu.main.expired.name'
+    lore: 'lang:menu.main.expired.lore'
+    actions:
+      - '[MENU] expired'
+    conditions:
+      - '%menu-type% == MAIN'
+
+  next-page:
+    slot: 50
+    material: PLAYER_HEAD
+    texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTRmOWYxNTg5Y2ViMmRmNzQzYThlMzJiOTE5YTZjNzVhMjA3Zjc0NjgxOTIzY2Q5ZWRmZmEwM2U0OTRkNWMifX19'
+    name: 'lang:menu.common.next-page.name'
+    lore: 'lang:menu.common.next-page.lore'
+    actions:
+      - '[PAGE] next'
+    conditions:
+      - '%menu-type% == MAIN'
+
+# Internal marker used to upgrade bundled layouts without touching edited files.
+layout-version: 15

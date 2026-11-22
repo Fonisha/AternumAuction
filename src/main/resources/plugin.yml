@@ -1,0 +1,86 @@
+name: AternumAuction
+version: 1.0.0
+main: dev.aternum.auction.AternumAuctionPlugin
+api-version: '1.13'
+description: A clean, multi-currency auction house with a fully configurable interface.
+authors: [Fonisha]
+website: https://github.com/Fonisha
+folia-supported: true
+load: POSTWORLD
+softdepend:
+  - Vault
+  - PlaceholderAPI
+  - PlayerPoints
+  - CoinsEngine
+  - RoyaleEconomy
+  - UltraEconomy
+  - SuperMobCoins
+
+commands:
+  auction:
+    description: Open the auction house.
+    aliases: [ah, auc, market]
+    usage: /ah [sell|buy|bid|view|history|expired|mine|limit|help|reload]
+  auctionadmin:
+    description: Administrative auction commands.
+    aliases: [ahadmin, aha, aa]
+    usage: /ahadmin [open|remove|purge|history|limit|convert|reload|menu]
+
+permissions:
+  aternumauction.use:
+    default: true
+    description: Access to player commands.
+  aternumauction.sell:
+    default: true
+  aternumauction.bid:
+    default: true
+  aternumauction.buy:
+    default: true
+  aternumauction.view:
+    default: true
+  aternumauction.history:
+    default: true
+  aternumauction.expired:
+    default: true
+  aternumauction.currency.select:
+    default: true
+  aternumauction.admin:
+    default: op
+    children:
+      aternumauction.admin.open: true
+      aternumauction.admin.remove: true
+      aternumauction.admin.purge: true
+      aternumauction.admin.history: true
+      aternumauction.admin.limit: true
+      aternumauction.admin.convert: true
+      aternumauction.reload: true
+  aternumauction.admin.open:
+    default: op
+  aternumauction.admin.remove:
+    default: op
+  aternumauction.admin.purge:
+    default: op
+  aternumauction.admin.history:
+    default: op
+  aternumauction.admin.limit:
+    default: op
+  aternumauction.admin.convert:
+    default: op
+  aternumauction.reload:
+    default: op
+  aternumauction.bypass.blacklist:
+    default: op
+  aternumauction.bypass.limit:
+    default: op
+  aternumauction.bypass.creative:
+    default: op
+  aternumauction.limit.5:
+    default: false
+  aternumauction.limit.10:
+    default: true
+  aternumauction.limit.25:
+    default: false
+  aternumauction.limit.50:
+    default: false
+  aternumauction.limit.100:
+    default: false

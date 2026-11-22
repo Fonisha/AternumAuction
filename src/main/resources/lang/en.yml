@@ -1,0 +1,349 @@
+# AternumAuction — English language
+# Author: https://github.com/Fonisha
+
+prefix: '&#FF6A00&lAuction &8» &r'
+
+messages:
+  no-permission: '&cYou do not have permission.'
+  player-only: '&cThis command is for players only.'
+  player-not-found: '&cPlayer not found.'
+  reloaded: '&aConfiguration, languages and interface reloaded.'
+  unknown-command: '&cUnknown subcommand. Use &f/ah help&c.'
+  no-economy: '&cCurrency &e%currency%&c is unavailable.'
+  currency-not-found: '&cCurrency not found.'
+  currency-selected: '&aSelected currency: &f%currency%&a.'
+  no-item: '&cHold an item in your hand.'
+  invalid-price: '&cEnter a price between &e%min%&c and &e%max%&c.'
+  invalid-amount: '&cEnter a valid amount.'
+  buy-request-listed: '&aBuy request created: &f%item% &7for &e%price%&a.'
+  buy-request-fulfilled: '&aYou sold &f%item% &7for &e%price%&a.'
+  request-item-mismatch: '&cYou must hold the exact item requested.'
+  listed: '&aListed: &f%item% &7for &e%price%&a.'
+  listed-bid: '&aAuction started: &f%item% &7starting at &e%price%&a.'
+  announce-listing: '&e%player% &7listed &f%item% &7for &e%price%&7.'
+  announce-purchase: '&e%player% &7bought &f%item% &7for &e%price%&7.'
+  bought: '&aYou bought &f%item% &7for &e%price%&a.'
+  bid-placed: '&aBid of &e%price% &aaccepted.'
+  bid-too-low: '&cMinimum bid: &e%price%&c.'
+  bid-own: '&cYou cannot bid on your own lot.'
+  own-lot: '&cYou cannot buy your own lot.'
+  not-found: '&cLot not found or already sold.'
+  not-active: '&cThis lot is no longer active.'
+  disabled: '&cThis lot type is disabled.'
+  not-enough: '&cNot enough funds.'
+  inventory-full: '&cNot enough inventory space.'
+  listing-limit: '&cListing limit: &e%limit%&c.'
+  blacklisted: '&cThis item cannot be sold.'
+  duplicate-item: '&cA similar item is already listed.'
+  cancelled: '&7Action cancelled.'
+  expired: '&eThe lot expired and the item was returned.'
+  won: '&aYou won &f%item% &7for &e%price%&a.'
+  claimed-items: '&aReceived &e%amount%&a item(s).'
+  claimed-money: '&aReceived &e%amount%&a payout(s).'
+  nothing-to-claim: '&7You have nothing to claim.'
+  pending-claims: '&eYou have items or payouts waiting. Claim them with &f/ah expired&e.'
+  removed: '&aListing removed.'
+  admin-removed: '&aListing removed by an administrator.'
+  purge-done: '&aRemoved lots: &e%amount%&a.'
+  migrated: '&aImported lots: &e%amount%&a.'
+  converted: '&aConversion of &f%plugin%&a finished: &e%amount%&a lots.'
+  converter-not-found: '&cConverter &f%plugin%&c was not found or the plugin is not installed.'
+  history-empty: '&7History is empty.'
+  limit-info: '&7Active lots: &f%used%&7/&f%limit%&7.'
+  admin-limit-set: '&aLimit of &f%player%&a set to &e%limit%&a.'
+  search-hint: '&eType your search query or &ccancel&e.'
+  price-hint: '&eType the price in chat or &ccancel&e.'
+  search-empty: '&7Nothing found for &f%query%&7.'
+  preview-unavailable: '&7This item has no contents.'
+  preview-blocked: '&cPreviewing this container is disabled.'
+  help:
+    - '&#FF6A00&lAternumAuction &7v%version%'
+    - '&e/ah &7— open the auction house'
+    - '&e/ah sell [price] &7— list the item in your hand'
+    - '&e/ah buy [price] [amount] &7— create a buy request'
+    - '&e/ah bid [price] &7— start a bidding auction'
+    - '&e/ah view <player> &7— lots of a player'
+    - '&e/ah mine &7— your lots'
+    - '&e/ah history &7— transaction history'
+    - '&e/ah expired &7— claim items and payouts'
+    - '&e/ah categories &7— browse categories'
+    - '&e/ah limit &7— your current lot limit'
+    - '&e/ah reload &7— reload the plugin'
+
+sort:
+  newest: 'Newest first'
+  oldest: 'Oldest first'
+  cheapest: 'Cheapest first'
+  expensive: 'Most expensive'
+  ending: 'Ending soon'
+  views: 'Most viewed'
+  currency: 'By currency'
+
+filter:
+  all: 'All lots'
+  mine: 'My lots'
+  seller: 'Player lots'
+  search: 'Search: %query%'
+  bin: 'Buy now'
+  bid: 'Bidding auctions'
+  buy-request: 'Buy requests'
+
+menu:
+  common:
+    close:
+      name: '&c&lClose'
+      lore:
+        - '&7Close the auction house'
+    back:
+      name: '&e&l← Back'
+      lore:
+        - '&7Return to the previous menu'
+    previous-page:
+      name: '&a&l‹ Previous'
+      lore:
+        - '&7Previous page'
+        - '&8Page %page% of %pages%'
+    next-page:
+      name: '&a&lNext ›'
+      lore:
+        - '&7Next page'
+        - '&8Page %page% of %pages%'
+
+  main:
+    title: '&#FF6A00&lAUCTION &8• &7%filter% &8• &7%page%&8/&7%pages%'
+    filler-name: ' '
+    category-menu:
+      name: '&b&lCategories'
+      lore:
+        - '&7Blocks, weapons, resources,'
+        - '&7potions and more'
+        - ''
+        - '&eOpen categories'
+    search:
+      name: '&b&lSearch'
+      lore:
+        - '&7Find a lot by name, lore,'
+        - '&7material or seller'
+        - ''
+        - '&eClick and type a query'
+    sort:
+      name: '&b&lSorting'
+      lore:
+        - '&7Choose how lots are displayed'
+        - '&eLMB &8- &fnext'
+        - '&eRMB &8- &fprevious'
+    refresh:
+      name: '&b&lRefresh auction'
+      lore:
+        - '&7Refresh the current lot list'
+        - '&7and prices on screen'
+        - ''
+        - '&eClick to refresh'
+    my-items:
+      name: '&b&lMy lots'
+      lore:
+        - '&7Your active listings'
+        - '&7Used: &f%used%&7/&f%limit%'
+        - ''
+        - '&eOpen my lots'
+    history:
+      name: '&b&lHistory'
+      lore:
+        - '&7Purchases, sales and bids'
+        - '&7Entries: &f%history%'
+        - ''
+        - '&eOpen history'
+    expired:
+      name: '&b&lClaim'
+      lore:
+        - '&7Items and money to collect'
+        - '&7Waiting: &f%pending%'
+        - ''
+        - '&eOpen storage'
+    empty:
+      name: '&8&l· &7&lNOTHING HERE YET &8&l·'
+      lore:
+        - '&7No lots match this view.'
+        - ''
+        - '&fHow to sell an item:'
+        - '&e  /ah sell &7— buy now'
+        - '&e  /ah bid &7— bidding auction'
+        - ''
+        - '&8Click to refresh'
+    auction-lore:
+      - '&8&m                              '
+      - '&7Seller: &f%seller%'
+      - '&7Category: &f%category%'
+      - '%price_line%'
+      - '%bid_line%'
+      - '&7Views: &f%views%'
+      - '&7Time left: &f%time%'
+      - '&8&m                              '
+      - '&eLMB &8— &f%action%'
+      - '%preview_line%'
+    price-line: '&7Price: &a%price%'
+    start-line: '&7Start: &f%price%'
+    bid-line: '&7Bid: &a%price% &7(%bidder%)'
+    action-buy: 'buy'
+    action-bid: 'place a bid'
+    action-remove: 'remove listing'
+    action-request: 'sell to request'
+    request-line: '&7Wanted for: &a%price% &7for &f%amount%'
+    preview-line: '&eRMB &8— &fpreview shulker contents'
+    mode-bin:
+      name: '&a&lBuy now'
+      lore: '&7Fixed-price listings||&eClick to open'
+      selected-lore: '&aCurrent section'
+    mode-bid:
+      name: '&6&lBidding auctions'
+      lore: '&7Players raise the price||&eClick to open'
+      selected-lore: '&aCurrent section'
+    mode-request:
+      name: '&b&lBuy requests'
+      lore: '&7Players request items||&eClick to open'
+      selected-lore: '&aCurrent section'
+    category-switch:
+      name: '&d&lCategory: &f%category%'
+      lore: '&7LMB &8- &fnext category||&7RMB &8- &fprevious category||&8Categories switch in this menu'
+    auction-type:
+      name: '&b&lAuction type: &f%filter%'
+      lore: '&7LMB &8- &fnext type||&7RMB &8- &fprevious type||&8Buy now, bidding and buy requests'
+    category-blocks:
+      name: '&a&lBlocks'
+      lore: '&7Building blocks||&eClick to select'
+    category-resources:
+      name: '&b&lResources'
+      lore: '&7Materials and ores||&eClick to select'
+    category-combat:
+      name: '&c&lCombat'
+      lore: '&7Weapons and armor||&eClick to select'
+    category-tools:
+      name: '&6&lTools'
+      lore: '&7Pickaxes, axes, shovels and hoes||&eClick to select'
+    category-misc:
+      name: '&7&lMiscellaneous'
+      lore: '&7Other items||&eClick to select'
+
+  categories:
+    title: '&#FF6A00&lCATEGORIES'
+    item-lore:
+      - '&7Items: &f%count%'
+      - ''
+      - '&eClick to open'
+    empty:
+      name: '&8&l· &7&lNO CATEGORIES &8&l·'
+      lore:
+        - '&7The administrator has not set up categories yet.'
+        - '&8File: categories.yml'
+
+  my-items:
+    title: '&#FF6A00&lMY LOTS &8• &7%filter% &8• &7%page%&8/&7%pages%'
+    empty:
+      name: '&8&l· &7&lYOU HAVE NO LOTS &8&l·'
+      lore:
+        - '&7List an item and it will appear here.'
+        - ''
+        - '&e/ah sell &7— sell the item in your hand'
+        - ''
+        - '&8Click to refresh'
+
+  history:
+    title: '&#FF6A00&lHISTORY &8• &7%page%&8/&7%pages%'
+    entry-name: '&e%type%'
+    entry-lore:
+      - '&7Item: &f%item%'
+      - '&7Amount: &a%amount%'
+      - '&7Counterparty: &f%counterparty%'
+      - '&7Currency: &f%currency%'
+      - '&8%date%'
+    empty:
+      name: '&8&l· &7&lHISTORY IS EMPTY &8&l·'
+      lore:
+        - '&7Your purchases, sales and bids'
+        - '&7will appear here.'
+        - ''
+        - '&8Click to refresh'
+
+  expired:
+    title: '&#FF6A00&lSTORAGE &8• &7%page%&8/&7%pages%'
+    claim-all:
+      name: '&a&lClaim all'
+      lore:
+        - '&7Items and money payouts'
+        - '&7Waiting: &f%pending%'
+        - ''
+        - '&eClick to collect'
+    payouts:
+      name: '&e&lPending payouts'
+      line: '&7%description% &8— &e%amount%'
+    empty:
+      name: '&8&l· &7&lNOTHING HERE &8&l·'
+      lore:
+        - '&7Expired lots and payouts'
+        - '&7will appear in this menu.'
+
+  confirm:
+    title: '&#FF6A00&lCONFIRMATION'
+    buy:
+      name: '&a&lBuy'
+      lore:
+        - '&7Take the item for &e%price%'
+        - ''
+        - '&eClick to confirm'
+    bid:
+      name: '&a&lPlace bid'
+      lore:
+        - '&7Your bid: &e%price%'
+        - ''
+        - '&eClick to confirm'
+    request:
+      name: '&a&lSell to request'
+      lore:
+        - '&7Give the item in your hand for &e%price%'
+        - ''
+        - '&eClick to confirm'
+    cancel:
+      name: '&c&lCancel'
+      lore:
+        - '&7Go back'
+    remove:
+      name: '&a&lRemove lot'
+      lore:
+        - '&7The item returns to your inventory'
+
+  currency:
+    title: '&#FF6A00&lSELECT A CURRENCY'
+    item-lore:
+      - '&7Currency: &f%currency%'
+      - '&7Balance: &a%balance%'
+      - '&7Tax: &f%tax%'
+      - ''
+      - '&eClick to select'
+    unavailable: '&cUnavailable on this server'
+
+  shulker:
+    title: '&#FF6A00&lCONTENTS &8%item%'
+    item-lore:
+      - '&7Click to go back'
+
+  admin:
+    title: '&#FF6A00&lADMINISTRATION'
+    purge-7:
+      name: '&cPurge lots older than 7 days'
+      lore:
+        - '&7Removes expired lots and returns items'
+    purge-30:
+      name: '&cPurge lots older than 30 days'
+      lore:
+        - '&7Removes expired lots and returns items'
+    reload:
+      name: '&eReload'
+      lore:
+        - '&7Configuration, languages and interface'
+    info:
+      name: '&bInformation'
+      lore:
+        - '&7Active lots: &f%total%'
+        - '&7Storage: &f%storage%'
+        - '&7Server: &f%server%'
+        - '&7Multi-server: &f%multi%'

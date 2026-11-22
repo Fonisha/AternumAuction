@@ -1,0 +1,74 @@
+categories:
+  blocks:
+    display-name: '&aБлоки'
+    icon: GRASS_BLOCK
+    materials:
+      - STONE
+      - COBBLESTONE
+      - DIRT
+      - GRASS_BLOCK
+      - SAND
+      - GRAVEL
+      - OAK_PLANKS
+      - IRON_BLOCK
+      - GOLD_BLOCK
+      - DIAMOND_BLOCK
+      - NETHERITE_BLOCK
+  resources:
+    display-name: '&bРесурсы'
+    icon: DIAMOND
+    materials:
+      - COAL
+      - IRON_INGOT
+      - GOLD_INGOT
+      - DIAMOND
+      - EMERALD
+      - REDSTONE
+      - LAPIS_LAZULI
+      - NETHERITE_INGOT
+      - ANCIENT_DEBRIS
+  combat:
+    display-name: '&cОружие и броня'
+    icon: DIAMOND_SWORD
+    materials:
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      - DIAMOND_HELMET
+      - DIAMOND_CHESTPLATE
+      - DIAMOND_LEGGINGS
+      - DIAMOND_BOOTS
+      - BOW
+      - CROSSBOW
+      - TRIDENT
+  tools:
+    display-name: '&6Инструменты'
+    icon: DIAMOND_PICKAXE
+    materials:
+      - WOODEN_PICKAXE
+      - STONE_PICKAXE
+      - IRON_PICKAXE
+      - GOLDEN_PICKAXE
+      - DIAMOND_PICKAXE
+      - NETHERITE_PICKAXE
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+      - WOODEN_SHOVEL
+      - STONE_SHOVEL
+      - IRON_SHOVEL
+      - GOLDEN_SHOVEL
+      - DIAMOND_SHOVEL
+      - NETHERITE_SHOVEL
+      - WOODEN_HOE
+      - STONE_HOE
+      - IRON_HOE
+      - GOLDEN_HOE
+      - DIAMOND_HOE
+      - NETHERITE_HOE
+  misc:
+    display-name: '&7Разное'
+    icon: CHEST
+    materials: []
