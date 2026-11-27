@@ -1,4 +1,4 @@
-# Items and payouts waiting for the player.
+# Предметы и выплаты, ожидающие игрока.
 title: 'lang:menu.expired.title'
 rows: 6
 page-size: 45
@@ -69,5 +69,5 @@ items:
     actions:
       - '[PAGE] next'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
-layout-version: 15
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
+layout-version: 17

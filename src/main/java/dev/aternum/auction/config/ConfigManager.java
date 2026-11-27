@@ -4,6 +4,7 @@ import dev.aternum.auction.AternumAuctionPlugin;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Typed access to config.yml.
@@ -22,7 +23,7 @@ public final class ConfigManager {
     }
 
     public String storageType() {
-        return plugin.getConfig().getString("storage.type", "yaml").toLowerCase();
+        return plugin.getConfig().getString("storage.type", "yaml").toLowerCase(Locale.ENGLISH);
     }
 
     public String string(String path, String fallback) {

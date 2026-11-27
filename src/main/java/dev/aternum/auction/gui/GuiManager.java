@@ -10,16 +10,16 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Fonisha (https://github.com/Fonisha)
  */
 public final class GuiManager implements Listener {
     private final AternumAuctionPlugin plugin;
-    private final Map<UUID, Gui> open = new HashMap<>();
+    private final Map<UUID, Gui> open = new ConcurrentHashMap<>();
 
     public GuiManager(AternumAuctionPlugin plugin) {
         this.plugin = plugin;

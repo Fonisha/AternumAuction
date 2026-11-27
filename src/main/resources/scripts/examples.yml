@@ -1,0 +1,133 @@
+# AternumAuction — готовые примеры скриптов
+#
+# КАК ИСПОЛЬЗОВАТЬ
+# 1. Добавьте имя нужного скрипта в событие в scripts.yml, например:
+#      hooks:
+#        purchase:
+#          - commission_10_percent
+# 2. Выполните /ah reload.
+# 3. Можно скопировать этот файл в my-scripts.yml и редактировать его. Файлы,
+#    начинающиеся с "disabled-" или "_", игнорируются — так скрипты легко
+#    временно отключить.
+#
+# ПЕРЕМЕННЫЕ (используйте их как %name% в любом месте скрипта)
+#   price          итоговая цена сделки
+#   total          цена, умноженная на количество предметов в стаке
+#   list_price     исходная цена лота
+#   current_price  текущая цена ставки (верхняя ставка + шаг для BID)
+#   top_bid        текущая верхняя ставка
+#   amount         количество предметов в стаке
+#   item           отображаемое имя предмета без цветов
+#   material       материал предмета, например DIAMOND_SWORD
+#   model          пользовательские данные модели или -1, если их нет
+#   currency       ID валюты, например vault, experience, playerpoints
+#   currency_name  отображаемое имя валюты из конфига
+#   type           BIN, BID или BUY_REQUEST
+#   category       определённая категория лота
+#   server         ID сервера из config.yml
+#   seller         имя продавца           seller_uuid  UUID продавца
+#   buyer          имя покупателя         player_uuid  UUID покупателя
+#   bidder/winner/player/actor            тот же игрок, что и buyer события
+#   auction_id     уникальный UUID лота
+#   hour, minute, day, month, year, weekday, weekday_name, date, time, timestamp
+#
+# СИНТАКСИС УСЛОВИЙ И МАТЕМАТИКИ
+#   + - * / % ( )   сравнения > < >= <= == !=   логика && || !
+#   функции: min max round floor ceil abs sqrt clamp
+#            contains(text, part) startswith(text, part)
+#            lower(text) upper(text) length(text) if(condition, a, b)
+#   строки: 'одинарные кавычки' или "двойные кавычки"
+#   Важно: плейсхолдеры "%name%" заменяются ДО разбора выражения.
+#
+# ДЕЙСТВИЯ
+#   when       условие; если оно ложно, скрипт пропускается
+#   commission число, удерживаемое из выплаты продавцу (работает на purchase,
+#              expire с победителем и request)
+#   deny       условие; при истине операция отменяется
+#   reason     сообщение игроку, используется вместе с deny
+#   message    сообщение игроку, участвующему в событии
+#   broadcast  сообщение всему серверу
+#   log        строка, записываемая в консоль сервера
+#   command    команда консоли (нужно settings.allow-commands: true)
+#
+# БЕЗОПАСНОСТЬ
+#   Выражения разбираются небольшим собственным парсером. У скрипта нет eval,
+#   доступа к файлам, сети или Java API.
+
+scripts:
+  # Комиссия с каждой покупки от 1000 и выше.
+  commission_10_percent:
+    enabled: true
+    when: '%price% >= 1000'
+    commission: '%price% * 0.10'
+    log: 'Комиссия: %price% %currency% от %seller%'
+
+  # Фиксированная комиссия только для очень дорогих лотов.
+  commission_fixed_if_high:
+    enabled: true
+    when: '%price% > 5000'
+    commission: '500'
+
+  # Разная комиссия только для аукционов со ставками.
+  commission_bid_only:
+    enabled: true
+    when: '%type% == ''BID'''
+    commission: '%price% * 0.05'
+
+  # Комиссия за определённое имя предмета (без учёта регистра).
+  commission_specific_item:
+    enabled: true
+    when: 'contains(lower(%item%), ''dragon'')'
+    commission: '%price% * 0.15'
+
+  # Комиссия за определённый ID пользовательской модели.
+  commission_specific_model:
+    enabled: true
+    when: '%model% == 1234'
+    commission: '250'
+
+  # Комиссия в выходные (weekday: 0 — воскресенье, 6 — суббота).
+  commission_weekend:
+    enabled: true
+    when: '%weekday% == 0 || %weekday% == 6'
+    commission: '%price% * 0.05'
+
+  # Комиссия в ночное время, полезно для событий.
+  commission_night:
+    enabled: true
+    when: '%hour% >= 22 || %hour% < 6'
+    commission: '%price% * 0.03'
+
+  # Комиссия только для одной валюты.
+  commission_vault_only:
+    enabled: true
+    when: '%currency% == ''vault'''
+    commission: '%price% * 0.02'
+
+  # Многоуровневая комиссия через вложенные функции if().
+  commission_tiered:
+    enabled: true
+    when: '%price% >= 100'
+    commission: 'if(%price% >= 10000, %price% * 0.08, if(%price% >= 1000, %price% * 0.05, %price% * 0.02))'
+
+  # Объявление дорогих продаж без изменения денег.
+  announce_big_sale:
+    enabled: true
+    when: '%price% >= 10000'
+    message: '&aВаша продажа завершена: &e%item% &7за &e%price% %currency_name%'
+    broadcast: '&6&lАукцион: &f%buyer% &7купил &e%item% &7за &e%price% %currency_name%'
+
+  # Отмена подозрительно дешёвых объявлений до их создания.
+  block_cheap_listing:
+    enabled: true
+    when: '%type% == ''BIN'' && %price% < 10'
+    deny: 'true'
+    reason: '&cМинимальная цена для этого предмета — 10.'
+
+  # Пример команды консоли. Отключён и игнорируется, если в scripts.yml
+  # не включено settings.allow-commands.
+  command_example:
+    enabled: false
+    when: '%price% >= 50000'
+    command: 'say Рекорд аукциона: %buyer% купил %item% за %price% %currency_name%'
+    log: 'Рекордная продажа от %buyer%'

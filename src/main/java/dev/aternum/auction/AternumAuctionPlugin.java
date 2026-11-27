@@ -20,6 +20,7 @@ import dev.aternum.auction.model.AuctionItem;
 import dev.aternum.auction.model.Transaction;
 import dev.aternum.auction.service.AuctionManager;
 import dev.aternum.auction.service.ConverterService;
+import dev.aternum.auction.script.ScriptManager;
 import dev.aternum.auction.service.DiscordService;
 import dev.aternum.auction.service.SyncService;
 import dev.aternum.auction.storage.StorageManager;
@@ -53,6 +54,7 @@ public final class AternumAuctionPlugin extends JavaPlugin implements AuctionAPI
     private DiscordService discordService;
     private SyncService syncService;
     private ConverterService converterService;
+    private ScriptManager scriptManager;
     private GuiManager guiManager;
     private InputManager inputManager;
     private AuctionAdminCommand adminCommand;
@@ -73,6 +75,7 @@ public final class AternumAuctionPlugin extends JavaPlugin implements AuctionAPI
         currencyRegistry = new CurrencyRegistry(this);
         currencyRegistry.reload();
         discordService = new DiscordService(this);
+        scriptManager = new ScriptManager(this, currencyRegistry, messages);
         storageManager = new StorageManager(this);
         storageManager.init();
         auctionManager = new AuctionManager(this, configManager, messages, categoryManager, blacklistManager,
@@ -106,7 +109,8 @@ public final class AternumAuctionPlugin extends JavaPlugin implements AuctionAPI
         registerMetrics();
         getLogger().info("AternumAuction " + getDescription().getVersion() + " enabled: "
                 + auctionManager.activeCount() + " lots, " + currencyRegistry.all().size() + " currencies, "
-                + (Scheduler.isFolia() ? "Folia" : "Bukkit") + " scheduler.");
+                + (Scheduler.isFolia() ? "Folia" : "Bukkit") + " scheduler, "
+                + scriptManager.debugInfo() + ".");
     }
 
     private void printStartupBanner() {
@@ -177,6 +181,7 @@ public final class AternumAuctionPlugin extends JavaPlugin implements AuctionAPI
         categoryManager.load();
         layoutManager.reload();
         currencyRegistry.reload();
+        scriptManager.reload();
         auctionManager.reload();
     }
 
@@ -197,6 +202,7 @@ public final class AternumAuctionPlugin extends JavaPlugin implements AuctionAPI
     public DiscordService getDiscordService() { return discordService; }
     public SyncService getSyncService() { return syncService; }
     public ConverterService getConverterService() { return converterService; }
+    public ScriptManager getScriptManager() { return scriptManager; }
     public GuiManager getGuiManager() { return guiManager; }
     public InputManager getInputManager() { return inputManager; }
     public AuctionAdminCommand getAdminCommand() { return adminCommand; }

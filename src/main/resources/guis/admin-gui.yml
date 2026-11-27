@@ -1,4 +1,4 @@
-# Administrator menu.
+# Меню администратора.
 title: 'lang:menu.admin.title'
 rows: 5
 
@@ -60,5 +60,5 @@ items:
     actions:
       - '[CLOSE]'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
-layout-version: 9
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
+layout-version: 17

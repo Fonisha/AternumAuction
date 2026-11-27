@@ -1,4 +1,4 @@
-# Currency selector shown before listing an item.
+# Выбор валюты перед созданием лота.
 title: 'lang:menu.currency.title'
 rows: 5
 page-size: 27
@@ -38,5 +38,5 @@ items:
     actions:
       - '[PAGE] next'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
-layout-version: 9
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
+layout-version: 17

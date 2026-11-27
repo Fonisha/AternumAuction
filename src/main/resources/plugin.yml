@@ -1,5 +1,5 @@
 name: AternumAuction
-version: 1.0.0
+version: 1.0.1
 main: dev.aternum.auction.AternumAuctionPlugin
 api-version: '1.13'
 description: A clean, multi-currency auction house with a fully configurable interface.

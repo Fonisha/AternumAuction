@@ -1,5 +1,5 @@
-# Category selector. Categories themselves are configured in categories.yml.
-# Icons sit in one centered row, so a short category list still looks tidy.
+# Выбор категорий. Сами категории настраиваются в categories.yml.
+# Иконки находятся в одном центрированном ряду, поэтому даже короткий список категорий выглядит аккуратно.
 title: 'lang:menu.categories.title'
 rows: 6
 page-size: 9
@@ -60,5 +60,5 @@ items:
     actions:
       - '[PAGE] next'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
-layout-version: 9
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
+layout-version: 17

@@ -20,6 +20,8 @@ import dev.aternum.auction.model.AuctionType;
 import dev.aternum.auction.model.Payout;
 import dev.aternum.auction.model.Transaction;
 import dev.aternum.auction.model.TransactionType;
+import dev.aternum.auction.script.ScriptContext;
+import dev.aternum.auction.script.ScriptManager;
 import dev.aternum.auction.storage.StorageManager;
 import dev.aternum.auction.util.Scheduler;
 import dev.aternum.auction.util.SoundUtil;
@@ -60,6 +62,7 @@ public final class AuctionManager implements Listener {
     private final CurrencyRegistry currencies;
     private final StorageManager storage;
     private final DiscordService discord;
+    private final ScriptManager scripts;
 
     private final Map<UUID, AuctionItem> auctions = new ConcurrentHashMap<>();
     private final Map<UUID, List<ItemStack>> claims = new ConcurrentHashMap<>();
@@ -79,6 +82,7 @@ public final class AuctionManager implements Listener {
         this.currencies = currencies;
         this.storage = storage;
         this.discord = discord;
+        this.scripts = plugin.getScriptManager();
     }
 
     public void load() {
@@ -157,8 +161,18 @@ public final class AuctionManager implements Listener {
         Bukkit.getPluginManager().callEvent(pre);
         if (pre.isCancelled()) return AuctionResult.fail("cancelled");
         price = pre.getPrice();
-        if (price < min || price > max) {
+        if (!Double.isFinite(price) || price < min || price > max) {
             return AuctionResult.fail("invalid-price", values("min", format(currency, min), "max", format(currency, max)));
+        }
+
+        ScriptContext listContext = scripts.context(null, seller, price).item(listed);
+        listContext.put("type", type.name());
+        listContext.put("currency", currency);
+        listContext.put("category", categories.resolve(listed));
+        ScriptManager.Outcome listScripts = scripts.run(ScriptManager.LIST, listContext);
+        if (listScripts.denied) {
+            if (listScripts.reason != null) messages.sendRaw(seller, listScripts.reason);
+            return AuctionResult.fail("cancelled");
         }
 
         hand.setAmount(hand.getAmount() - amount);
@@ -254,8 +268,16 @@ public final class AuctionManager implements Listener {
             auctions.remove(id);
             double unit = request.price() / Math.max(1, requested.getAmount());
             double payout = unit * deliver;
-            depositOrQueue(seller.getUniqueId(), request.currency(), payout, "Продажа по запросу " + request.displayName());
-            record(seller.getUniqueId(), seller.getName(), request, TransactionType.REQUEST_FULFILL, payout,
+            ScriptContext requestContext = scripts.context(request, seller, payout);
+            requestContext.put("buyer", Bukkit.getOfflinePlayer(request.seller()));
+            ScriptManager.Outcome requestScripts = scripts.run(ScriptManager.REQUEST, requestContext);
+            double requestCommission = Math.min(Math.max(0, requestScripts.commission), payout);
+            depositOrQueue(seller.getUniqueId(), request.currency(), payout - requestCommission,
+                    "Продажа по запросу " + request.displayName());
+            if (requestCommission > 0) {
+                depositCommission(request.currency(), requestCommission, "Комиссия " + request.displayName());
+            }
+            record(seller.getUniqueId(), seller.getName(), request, TransactionType.REQUEST_FULFILL, payout - requestCommission,
                     request.currency(), request.displayName(), request.sellerName());
             record(request.seller(), request.sellerName(), request, TransactionType.PURCHASE, payout,
                     request.currency(), request.displayName(), seller.getName());
@@ -294,9 +316,22 @@ public final class AuctionManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return AuctionResult.fail("cancelled");
             price = event.getPrice();
+            double min = config.decimal("settings.min-price", 1);
+            double max = config.decimal("settings.max-price", 1000000000);
+            if (!Double.isFinite(price) || price < min || price > max) {
+                return AuctionResult.fail("invalid-price", values("min", format(currency, min), "max", format(currency, max)));
+            }
 
             if (!currencies.has(currency, buyer, price)) return AuctionResult.fail("not-enough");
             if (!hasSpace(buyer, auction.item())) return AuctionResult.fail("inventory-full");
+
+            ScriptManager.Outcome purchaseScripts = scripts.run(ScriptManager.PURCHASE,
+                    scripts.context(auction, buyer, price));
+            if (purchaseScripts.denied) {
+                if (purchaseScripts.reason != null) messages.sendRaw(buyer, purchaseScripts.reason);
+                return AuctionResult.fail("cancelled");
+            }
+
             if (!currencies.withdraw(currency, buyer, price)) return AuctionResult.fail("not-enough");
 
             if (!storage.reserveAuction(id)) {
@@ -310,9 +345,13 @@ public final class AuctionManager implements Listener {
             for (ItemStack item : left.values()) addClaim(buyer.getUniqueId(), item);
 
             double tax = tax(price);
-            depositOrQueue(auction.seller(), currency, price - tax, "Продажа " + auction.displayName());
+            double commission = Math.min(Math.max(0, purchaseScripts.commission), Math.max(0, price - tax));
+            depositOrQueue(auction.seller(), currency, price - tax - commission, "Продажа " + auction.displayName());
+            if (commission > 0) {
+                depositCommission(currency, commission, "Комиссия " + auction.displayName());
+            }
             record(buyer.getUniqueId(), buyer.getName(), auction, TransactionType.PURCHASE, price, currency, auction.displayName(), auction.sellerName());
-            record(auction.seller(), auction.sellerName(), auction, TransactionType.SALE, price - tax, currency, auction.displayName(), buyer.getName());
+            record(auction.seller(), auction.sellerName(), auction, TransactionType.SALE, price - tax - commission, currency, auction.displayName(), buyer.getName());
 
             Bukkit.getPluginManager().callEvent(new AuctionPostPurchaseEvent(buyer, auction, price));
             SoundUtil.play(plugin, buyer, "success");
@@ -342,6 +381,7 @@ public final class AuctionManager implements Listener {
             }
             String currency = auction.currency();
             double amount = auction.currentPrice();
+            if (!Double.isFinite(amount) || amount <= 0) return AuctionResult.fail("invalid-price");
             if (!currencies.available(currency)) return AuctionResult.fail("no-economy", values("currency", currency));
 
             AuctionBidEvent event = new AuctionBidEvent(bidder, auction, amount);
@@ -349,6 +389,14 @@ public final class AuctionManager implements Listener {
             if (event.isCancelled()) return AuctionResult.fail("cancelled");
 
             if (!currencies.has(currency, bidder, amount)) return AuctionResult.fail("not-enough");
+
+            ScriptManager.Outcome bidScripts = scripts.run(ScriptManager.BID,
+                    scripts.context(auction, bidder, amount));
+            if (bidScripts.denied) {
+                if (bidScripts.reason != null) messages.sendRaw(bidder, bidScripts.reason);
+                return AuctionResult.fail("cancelled");
+            }
+
             if (!currencies.withdraw(currency, bidder, amount)) return AuctionResult.fail("not-enough");
 
             if (auction.topBidder() != null) {
@@ -381,6 +429,12 @@ public final class AuctionManager implements Listener {
             AuctionItem auction = auctions.get(id);
             if (auction == null) return AuctionResult.fail("not-found");
             if (!admin && (actor == null || !auction.seller().equals(actor.getUniqueId()))) {
+                return AuctionResult.fail("no-permission");
+            }
+            ScriptManager.Outcome removeScripts = scripts.run(ScriptManager.REMOVE,
+                    scripts.context(auction, actor, auction.currentPrice()));
+            if (removeScripts.denied) {
+                if (removeScripts.reason != null && actor != null) messages.sendRaw(actor, removeScripts.reason);
                 return AuctionResult.fail("no-permission");
             }
             if (!storage.reserveAuction(id)) {
@@ -472,16 +526,29 @@ public final class AuctionManager implements Listener {
                     winner = Bukkit.getPlayer(auction.topBidder());
                     deliver(auction.topBidder(), auction.item());
                     double tax = tax(auction.topBid());
-                    depositOrQueue(auction.seller(), auction.currency(), auction.topBid() - tax,
+                    ScriptContext expireContext = scripts.context(auction, winner, auction.topBid());
+                    expireContext.put("buyer", Bukkit.getOfflinePlayer(auction.topBidder()));
+                    ScriptManager.Outcome expireScripts = scripts.run(ScriptManager.EXPIRE, expireContext);
+                    double expireCommission = Math.min(Math.max(0, expireScripts.commission),
+                            Math.max(0, auction.topBid() - tax));
+                    depositOrQueue(auction.seller(), auction.currency(),
+                            auction.topBid() - tax - expireCommission,
                             "Завершение аукциона " + auction.displayName());
+                    if (expireCommission > 0) {
+                        depositCommission(auction.currency(), expireCommission, "Комиссия " + auction.displayName());
+                    }
                     record(auction.seller(), auction.sellerName(), auction, TransactionType.SALE,
-                            auction.topBid() - tax, auction.currency(), auction.displayName(), auction.topBidderName());
+                            auction.topBid() - tax - expireCommission, auction.currency(), auction.displayName(), auction.topBidderName());
                     if (winner != null) messages.send(winner, "won",
                             values("item", auction.displayName(), "price", format(auction.currency(), auction.topBid())));
                 } else {
                     deliver(auction.seller(), auction.item());
                     Player seller = Bukkit.getPlayer(auction.seller());
                     if (seller != null) messages.send(seller, "expired");
+                }
+                if (auction.type() != AuctionType.BID || auction.topBidder() == null) {
+                    scripts.run(ScriptManager.EXPIRE, scripts.context(auction,
+                            Bukkit.getPlayer(auction.seller()), auction.currentPrice()));
                 }
                 record(auction.seller(), auction.sellerName(), auction, TransactionType.EXPIRE, 0,
                         auction.currency(), auction.displayName(), "");
@@ -539,6 +606,13 @@ public final class AuctionManager implements Listener {
         Payout payout = new Payout(owner, currency, amount, description, System.currentTimeMillis());
         payouts.computeIfAbsent(owner, key -> new ArrayList<Payout>()).add(payout);
         storage.savePayout(payout);
+    }
+
+    /** Sends a script commission to the configured treasury, or withholds it. */
+    private void depositCommission(String currency, double amount, String description) {
+        UUID treasury = scripts.treasury();
+        if (treasury == null) return;
+        depositOrQueue(treasury, currency, amount, description);
     }
 
     public void addClaim(UUID owner, ItemStack item) {

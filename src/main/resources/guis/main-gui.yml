@@ -1,18 +1,18 @@
-# Main auction menu.
+# Главное меню аукциона.
 #
-# The interface is configured here, by the server owner, and is applied with
-# /ah reload. Players never edit the layout in game.
+# Интерфейс настраивает владелец сервера, изменения применяются командой
+# /ah reload. Игроки не могут менять лэйаут в игре.
 #
-# rows                 menu height (1-6)
-# page-size            how many lots fit on one page
-# content-start        first slot used by lots
-# center-content       center short pages inside the first content row
-# filler               optional background for empty slots
-# name/lore            use "lang:path" to read from lang/ru.yml or lang/en.yml
-# texture              base64 skull texture for a custom head button
+# rows                 высота меню (1-6)
+# page-size            сколько лотов помещается на одной странице
+# content-start        первый слот, используемый под лоты
+# center-content       центрировать короткие страницы в первом ряду
+# filler               необязательный фон для пустых слотов
+# name/lore            используйте "lang:path", чтобы взять текст из lang/ru.yml или lang/en.yml
+# texture              PNG-текстура головы в base64 для кнопки с пользовательским черепом
 #
-# Actions: [MENU] [PAGE] [SORT] [MODE] [CATEGORY] [CLOSE] [BACK] [REFRESH] [SOUND]
-#          [MESSAGE] [CLAIM] [BUY] [BID] [REMOVE] [RELOAD] [PURGE] [CMD] [PLAYER]
+# Действия: [MENU] [PAGE] [SORT] [MODE] [CATEGORY] [CLOSE] [BACK] [REFRESH] [SOUND]
+#           [MESSAGE] [CLAIM] [BUY] [BID] [REMOVE] [RELOAD] [PURGE] [CMD] [PLAYER]
 
 title: 'lang:menu.main.title'
 rows: 6
@@ -45,8 +45,8 @@ items:
     actions:
       - '[CATEGORY] cycle'
 
-  # Centered placeholder shown while the auction is empty. It disappears as
-  # soon as at least one lot matches the current filter.
+  # Центрированная заглушка, пока аукцион пуст. Исчезает, как только
+  # хотя бы один лот соответствует текущему фильтру.
   empty:
     slot: 22
     material: PLAYER_HEAD
@@ -128,5 +128,5 @@ items:
     conditions:
       - '%menu-type% == MAIN'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
-layout-version: 15
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
+layout-version: 17

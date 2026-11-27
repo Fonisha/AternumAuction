@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,7 +62,7 @@ public final class StorageManager {
     }
 
     private Storage create() {
-        String type = plugin.getConfig().getString("storage.type", "yaml").toLowerCase();
+        String type = plugin.getConfig().getString("storage.type", "yaml").toLowerCase(Locale.ENGLISH);
         if ("sqlite".equals(type)) return new SqlStorage(plugin, false);
         if ("mysql".equals(type)) return new SqlStorage(plugin, true);
         return new YamlStorage(plugin, new File(plugin.getDataFolder(), "data.yml"));

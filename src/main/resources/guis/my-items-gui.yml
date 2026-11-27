@@ -1,5 +1,5 @@
-# Player's own lots. Main auction controls are restricted to MAIN in the parent
-# layout, so this screen only adds its own navigation and history controls.
+# Собственные лоты игрока. Основные элементы управления аукционом в родительском
+# лэйауте ограничены типом MAIN, поэтому здесь только своя навигация и история.
 inherit: main-gui
 title: 'lang:menu.my-items.title'
 
@@ -61,5 +61,5 @@ items:
     actions:
       - '[PAGE] next'
 
-# Internal marker used to upgrade bundled layouts without touching edited files.
+# Внутренняя метка для обновления встроенных лэйаутов без изменения отредактированных файлов.
 layout-version: 17

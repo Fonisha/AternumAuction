@@ -5,7 +5,7 @@
 
   <groupId>dev.aternum</groupId>
   <artifactId>aternum-auction</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>AternumAuction</name>
   <description>Configurable multi-currency auction house for Bukkit, Spigot, Paper and Folia.</description>
   <url>https://github.com/Fonisha/AternumAuction</url>

@@ -11,9 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  */
 public final class InputManager implements Listener {
     private final AternumAuctionPlugin plugin;
-    private final Map<UUID, Consumer<String>> requests = new HashMap<>();
+    private final Map<UUID, Consumer<String>> requests = new ConcurrentHashMap<>();
 
     public InputManager(AternumAuctionPlugin plugin) {
         this.plugin = plugin;

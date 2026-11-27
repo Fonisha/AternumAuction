@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-ff6a00?style=for-the-badge">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.1-ff6a00?style=for-the-badge">
   <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.13--1.21-3fb950?style=for-the-badge">
   <img alt="Java" src="https://img.shields.io/badge/Java-8%2B-f0b400?style=for-the-badge">
   <img alt="Folia" src="https://img.shields.io/badge/Folia-yes-8957e5?style=for-the-badge">
@@ -95,6 +95,20 @@ AternumAuction — многофункциональная торговая пл�
 ### Интерфейс
 
 Все меню лежат в `plugins/AternumAuction/guis/`. Их настраивает только владелец сервера — игроки не могут менять кнопки и слоты в игре.
+
+### Скрипты
+
+Настройки и привязка скриптов к событиям находятся в отдельном файле `plugins/AternumAuction/scripts.yml` (не в `config.yml`). Готовые примеры — в `plugins/AternumAuction/scripts/examples.yml`. Свои `.yml` файлы можно просто положить в папку `scripts/` — они загружаются автоматически.
+
+Пример включения комиссии:
+
+```yaml
+hooks:
+  purchase:
+    - commission_10_percent
+```
+
+После изменений выполните `/ah reload`. Скрипты могут считать комиссию от общей суммы покупки, учитывать предмет, модель, валюту, дату и час, отменять операцию, отправлять сообщения и писать в консоль. Переменные: `%price%`, `%total%`, `%amount%`, `%item%`, `%material%`, `%model%`, `%currency%`, `%type%`, `%seller%`, `%buyer%`, `%auction_id%`, `%hour%`, `%date%` и другие. Выражения поддерживают `+ - * / %`, сравнения, логику и функции (`min`, `max`, `round`, `contains`, `if` и др.). Скрипты не имеют доступа к Java API, файлам и сети.
 
 ### Скриншоты интерфейса
 
@@ -260,7 +274,7 @@ aternumauction.limit.100
 
 1. Java 8+ и Spigot/Paper/Folia.
 2. Vault и любая экономика (не обязательно, если используете опыт или предметы).
-3. Положите `AternumAuction-1.0.0.jar` в `plugins/`.
+3. Положите `AternumAuction-1.0.1.jar` в `plugins/`.
 4. Запустите сервер.
 5. Настройте `config.yml`, `categories.yml`, `lang/*.yml` и `guis/*.yml`.
 6. Перезагрузите: `/ah reload`.
@@ -324,7 +338,7 @@ currencies:
 mvn clean package
 ```
 
-Готовый файл: `target/AternumAuction-1.0.0.jar`.
+Готовый файл: `target/AternumAuction-1.0.1.jar`.
 
 Проект компилируется под Java 8 и `spigot-api 1.13.2`, поэтому запускается и на старых, и на новых ядрах. SQLite и MySQL-драйверы уже внутри JAR.
 
@@ -362,7 +376,7 @@ AternumAuction is a configurable auction house for Bukkit, Spigot, Paper and Fol
 
 Highlights: BIN and bidding lots, automatic refunds, offline payouts, shulker preview, multi-server MySQL mode, converters, Discord webhooks, PlaceholderAPI and Folia scheduling.
 
-Build with `mvn clean package`. The release jar is `AternumAuction-1.0.0.jar`.
+Build with `mvn clean package`. The release jar is `AternumAuction-1.0.1.jar`.
 
 ---
 

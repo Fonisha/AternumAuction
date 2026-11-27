@@ -85,19 +85,24 @@ public final class AuctionCommand implements CommandExecutor, TabCompleter {
                 view(player, args);
                 return true;
             case "mine":
+                if (!hasUse(player)) return denied(player);
                 plugin.openMenu(player, MenuType.MY, MenuContext.main(player, AuctionFilter.mine(player.getUniqueId()), sort(player), 0));
                 return true;
             case "expired":
             case "claim":
+                if (!player.hasPermission("aternumauction.expired")) return denied(player);
                 plugin.openMenu(player, MenuType.EXPIRED, new MenuContext(MenuType.EXPIRED, player));
                 return true;
             case "history":
+                if (!player.hasPermission("aternumauction.history")) return denied(player);
                 plugin.openMenu(player, MenuType.HISTORY, new MenuContext(MenuType.HISTORY, player));
                 return true;
             case "categories":
+                if (!hasUse(player)) return denied(player);
                 plugin.openMenu(player, MenuType.MAIN, MenuContext.main(player, AuctionFilter.type(AuctionType.BIN), sort(player), 0));
                 return true;
             case "limit":
+                if (!hasUse(player)) return denied(player);
                 int used = plugin.getAuctionManager().count(player.getUniqueId());
                 int limit = plugin.getConfigManager().limit(player, plugin.getStorageManager().limitBonus(player.getUniqueId()));
                 plugin.getMessages().send(player, "limit-info", values(
@@ -105,9 +110,11 @@ public final class AuctionCommand implements CommandExecutor, TabCompleter {
                         "limit", limit == Integer.MAX_VALUE ? "∞" : String.valueOf(limit)));
                 return true;
             case "currency":
+                if (!hasUse(player)) return denied(player);
                 currency(player, args);
                 return true;
             case "help":
+                if (!hasUse(player)) return denied(player);
                 for (String line : plugin.getMessages().list("help")) {
                     player.sendMessage(Text.color(line.replace("%version%", plugin.getDescription().getVersion())));
                 }
@@ -116,6 +123,15 @@ public final class AuctionCommand implements CommandExecutor, TabCompleter {
                 plugin.getMessages().send(player, "unknown-command");
                 return true;
         }
+    }
+
+    private boolean hasUse(Player player) {
+        return player.hasPermission("aternumauction.use");
+    }
+
+    private boolean denied(Player player) {
+        plugin.getMessages().send(player, "no-permission");
+        return true;
     }
 
     private void open(CommandSender sender) {

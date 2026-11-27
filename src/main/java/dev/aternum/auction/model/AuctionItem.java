@@ -85,7 +85,7 @@ public final class AuctionItem {
         return !isExpired();
     }
 
-    public void incrementViews() {
+    public synchronized void incrementViews() {
         views++;
     }
 

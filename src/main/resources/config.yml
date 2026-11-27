@@ -1,16 +1,16 @@
 # AternumAuction 4.x
-# Author: https://github.com/Fonisha
-# Reload with /ah reload
+# Автор: https://github.com/Fonisha
+# Перезагрузка: /ah reload
 
 config-version: 1
 
-# Register the plugin at https://bstats.org/ to receive a plugin id.
-# Leave this at 0 until the project has been registered.
+# Зарегистрируйте плагин на https://bstats.org/, чтобы получить его ID.
+# Оставьте 0, пока проект не зарегистрирован.
 bstats:
   plugin-id: 35506
 
 settings:
-  # Available: ru, en. Language files live in plugins/AternumAuction/lang/
+  # Доступные языки: ru, en. Файлы языков лежат в plugins/AternumAuction/lang/
   language: ru
   default-duration-hours: 48
   max-duration-hours: 168
@@ -30,9 +30,9 @@ settings:
     enabled: true
     min-price: 1000.0
   limits:
-    # base amount of active lots
+    # базовое количество активных лотов
     default: 10
-    # permission tiers: aternumauction.limit.<value>
+    # уровни прав: aternumauction.limit.<value>
     values: [5, 10, 25, 50, 100]
   blacklist:
     materials: [BEDROCK, BARRIER, COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, REPEATING_COMMAND_BLOCK, STRUCTURE_BLOCK, STRUCTURE_VOID, JIGSAW, LIGHT, DEBUG_STICK]
@@ -53,17 +53,17 @@ settings:
     by-seller: true
 
 server:
-  # unique name of this server, used for multi-server filtering
+  # уникальное имя сервера, используется при фильтрации в мультисерверном режиме
   id: 'server-1'
   multi-server:
     enabled: false
-    # how often claims/payouts created by other servers are pulled
+    # как часто подтягиваются вещи и выплаты, созданные другими серверами
     sync-interval-seconds: 20
-    # show lots listed on other servers too
+    # показывать ли лоты с других серверов
     show-all-servers: false
 
 storage:
-  # yaml, sqlite or mysql
+  # yaml, sqlite или mysql
   type: yaml
   sqlite-file: data.db
   mysql:
@@ -73,15 +73,15 @@ storage:
     username: root
     password: ''
     use-ssl: false
-    # required for multi-server
+    # обязательно для мультисерверного режима
     table-prefix: 'aternum_'
 
 currencies:
-  # default currency selected for new listings
+  # валюта по умолчанию для новых лотов
   default: vault
-  # remembers the last currency picked by the player
+  # запоминать последнюю выбранную игроком валюту
   remember-selection: true
-  # lets players pick a currency before listing
+  # позволяет игрокам выбрать валюту перед созданием лота
   selection-gui: true
   vault:
     enabled: true
@@ -121,7 +121,7 @@ currencies:
     display-name: '&6Coins'
     symbol: 'c'
     icon: GOLD_NUGGET
-    # currency id inside CoinsEngine
+    # ID валюты внутри CoinsEngine
     currency-id: coins
     allow-offline: true
 
@@ -131,13 +131,13 @@ discord:
   username: 'AternumAuction'
   avatar-url: ''
   color: 3447003
-  # events: listing, purchase, bid, expiration, admin
+  # события: listing, purchase, bid, expiration, admin
   events: [listing, purchase, bid, expiration]
   server-name: ''
 
-# The interface itself lives in plugins/AternumAuction/guis/*.yml.
-# Every slot, material, head texture, name, lore and action is edited there.
-# Apply changes with /ah reload.
+# Сам интерфейс находится в plugins/AternumAuction/guis/*.yml.
+# Там же настраиваются слоты, материалы, текстуры голов, названия, лор и действия.
+# Изменения применяются командой /ah reload.
 
 sounds:
   open: BLOCK_ENDER_CHEST_OPEN
@@ -147,5 +147,5 @@ sounds:
   page: ITEM_BOOK_PAGE_TURN
   sell: ENTITY_VILLAGER_TRADE
 
-# Messages are not stored here on purpose: see lang/ru.yml and lang/en.yml
-# That keeps config.yml small and translations in one place.
+# Сообщения намеренно не хранятся здесь: см. lang/ru.yml и lang/en.yml
+# Это оставляет config.yml компактным, а переводы — в одном месте.
